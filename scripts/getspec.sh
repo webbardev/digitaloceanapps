@@ -8,24 +8,25 @@ if [ -z "$1" ] || [ -z "$2" ]; then
     exit 1
 fi
 
-
 # Definitions
 authContext=$1
 appName=$2
 backupsFolder="backups"
 specFolder="specs"
 current_date=$(date '+%d_%m_%Y_%H_%M_%S')
-appId=$(getAppId "$appName")
 extension="yml"
 
+# Switch Auth Context
+doctl auth switch --context "$authContext"
+
+# Get actual App ID
+appId=$(getAppId "$appName")
 echo "App ID: $appId"
 
 if [[ ! $appId =~ ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$ ]]; then
     echo "App ID could not be found!"
     exit 1
 fi
-
-doctl auth switch --context "$authContext"
 
 # Backup the current file
 if [ ! -d "$backupsFolder" ]; then
