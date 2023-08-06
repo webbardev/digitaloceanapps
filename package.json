@@ -3,7 +3,9 @@
   "version": "1.0.1",
   "private": false,
   "description": "",
-  "scripts": {},
+  "scripts": {
+    "testget": "./scripts/getspec.sh webbar webbar-website-prod"
+  },
   "author": "webbar GmbH, https://webbar.dev",
   "license": "MIT"
 }

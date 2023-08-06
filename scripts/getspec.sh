@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source ./functions.sh
+source ./scripts/functions.sh
 
 # Check if both arguments are provided
 if [ -z "$1" ] || [ -z "$2" ]; then
@@ -19,6 +19,11 @@ appId=$(getAppId "$appName")
 extension="yml"
 
 echo "App ID: $appId"
+
+if [[ ! $appId =~ ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$ ]]; then
+    echo "App ID could not be found!"
+    exit 1
+fi
 
 doctl auth switch --context "$authContext"
 
@@ -39,7 +44,7 @@ if [ -f "./$specFolder/$appName.$extension" ]; then
   if [ $? -eq 0 ]; then
     echo "App Spec backed up: $backup_filename"
     # Commit the Backup
-    git add "./backups/$backup_filename"
+    git add -f "./backups/$backup_filename"
   else
       echo "Error occurred while creating backup: $backup_filename"
       exit 3
@@ -53,3 +58,5 @@ fi
 
 # Get latest app spec version
 doctl apps spec get "$appId" > "./$specFolder/$appName.$extension"
+
+git add -f "./$specFolder/$appName.$extension"
