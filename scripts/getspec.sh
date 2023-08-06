@@ -43,8 +43,7 @@ fi
 git add "./backups/$backup_filename"
 
 # Get latest version
-doctl apps spec get "$appId" > "/specs/$specFilename"
-
+doctl apps spec get "$appId" > "./$specFolder/$specFilename"
 
 
 
