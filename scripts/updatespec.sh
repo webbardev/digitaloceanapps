@@ -45,6 +45,10 @@ while true; do
     # Check if the output contains "5/5" or "error"
     if [[ $output == *"5/5"* ]]; then
         echo -e "\n##########\nSUCCESS:\n $output"
+
+        # Down the current app spec to update for example secrets
+        ./scripts/getspec.sh $authContext $appName;
+        exit 0;
         break
     fi
 
@@ -66,3 +70,4 @@ while true; do
     # Wait for one second before the next iteration
     sleep 1
 done
+
