@@ -1,0 +1,13 @@
+{
+  "name": "digitalocean",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "postinstall": "cp -r node_modules/digitaloceanapps/scripts ."
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "digitaloceanapps": "github:webbardev/digitaloceanapps"
+  }
+}
