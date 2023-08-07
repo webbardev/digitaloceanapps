@@ -26,6 +26,6 @@ npm run stageget
 .do
     /scripts    # Read-Only, the scripts
     /backups    # Read-Only, automated backups
-    /spec       # App-Specs defined by each instance. Filenames should be App-Names
+    /specs       # App-Specs defined by each instance. Filenames should be App-Names
 ````
 
