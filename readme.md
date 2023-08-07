@@ -11,8 +11,8 @@ Note: If you want to update with ``npm update`` you should run install afterward
 
 3: Add postinstall script and
 ````
-"stageget": "./scripts/getspec.sh <AUTH-CONTEXT> staging",
-"stageupdate": "./scripts/updatespec.sh <AUTH-CONTEXT> staging",
+"stage-get": "./scripts/getspec.sh <AUTH-CONTEXT> staging",
+"stage-update": "./scripts/updatespec.sh <AUTH-CONTEXT> staging",
 "postinstall": "cp -r node_modules/digitaloceanapps/scripts ."
 ````
 
