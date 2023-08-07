@@ -1,20 +1,33 @@
 #!/bin/bash
 
+source ./scripts/functions.sh
+
 # Check if both arguments are provided
 if [ -z "$1" ] || [ -z "$2" ]; then
-    echo "Usage: $0 <appID> <specPath>"
+    echo "Usage: $0 <authContext> <appName>"
     exit 1
 fi
 
 # Assign the first argument to appId and the second to specPath
-appId=$1
-specPath=$2
+authContext=$1
+appName=$2
+specFolder="specs"
+extension="yml"
 
-npm run doauth
+doctl auth switch --context "$authContext"
+
+# Get actual App ID
+appId=$(getAppId "$appName")
+echo "App ID: $appId"
+
+if [[ ! $appId =~ ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$ ]]; then
+    echo "App ID could not be found!"
+    exit 1
+fi
 
 # Update the Spec
 # shellcheck disable=SC2086
-doctl apps update $appId --spec "$specPath"
+doctl apps update $appId --spec "./$specFolder/$appName.$extension" --format ID,Spec.Name
 output=$(doctl apps get "$appId")
 deployment_id=$(echo "$output" | awk 'NR==2 {print $4}')
 
