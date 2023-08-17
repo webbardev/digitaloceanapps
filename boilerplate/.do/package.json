@@ -3,11 +3,13 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "postinstall": "cp -r node_modules/digitaloceanapps/scripts ."
+    "postinstall": "node copyAndMakeExecutable.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "digitaloceanapps": "github:webbardev/digitaloceanapps"
+    "digitaloceanapps": "github:webbardev/digitaloceanapps",
+    "fs-extra": "^11.1.1",
+    "shelljs": "^0.8.5"
   }
 }
