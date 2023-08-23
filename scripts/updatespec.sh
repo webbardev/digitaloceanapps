@@ -13,6 +13,7 @@ authContext=$1
 appName=$2
 specFolder="specs"
 extension="yml"
+specPathName="$specFolder/$appName.$extension"
 
 doctl auth switch --context "$authContext"
 
@@ -22,36 +23,44 @@ NC='\033[0m'        # No color
 
 # TODO Get a Difference between current and old one
 
-echo -e "${RED}Attention:${NC} Ensure you've pushed the latest app-spec updates. An outdated base can damage your deployment. Confirm with ${GREEN}Y${NC}(es)/${RED}N${NC}."
-echo -en "Confirm (${GREEN}Y${NC}/${RED}N${NC}): "
-read confirmation
 
-case "$confirmation" in
-    [Yy]* )
-        # Continue with the rest of your script here
-        echo "You confirmed. Continuing..."
-        ;;
-    * )
-        # Exit or do other stuff
-        echo "Exiting without confirmation."
-        exit 1
-        ;;
-esac
+
 
 # Get actual App ID
 appId=$(getAppId "$appName")
 echo "App ID: $appId"
-echo "Spec: ./$specFolder/$appName.$extension"
+echo "Spec: ./$specPathName"
 
 if [[ ! $appId =~ ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$ ]]; then
     echo "App ID could not be found!"
     exit 1
 fi
 
- Update the Spec
- shellcheck disable=SC2086
+#Update the Spec
+#shellcheck disable=SC2086
 
-doctl apps update $appId --spec "./$specFolder/$appName.$extension" --format ID --no-header
+currentSpec=$(doctl apps spec get $appId)
+
+compare_files "$currentSpec" "$specPathName"
+
+### CONFIRMATION
+echo -e "${RED}Attention:${NC} Ensure you've pushed the latest app-spec updates. An outdated base can damage your deployment. Confirm with ${GREEN}Y${NC}(es)/${RED}N${NC}."
+echo -en "Confirm (${GREEN}Y${NC}/${RED}N${NC}): "
+read confirmation
+
+case "$confirmation" in
+   [Yy]* )
+       # Continue with the rest of your script here
+       echo "You confirmed. Continuing..."
+       ;;
+   * )
+       # Exit or do other stuff
+       echo "Exiting without confirmation."
+       exit 1
+       ;;
+esac
+
+doctl apps update $appId --spec "./$specPathName" --format ID --no-header
 
 attempts=0
 max_attempts=10
