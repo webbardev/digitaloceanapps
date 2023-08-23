@@ -21,10 +21,12 @@ RED='\033[0;31m'    # ANSI color code for red
 GREEN='\033[0;32m'  # ANSI color code for green
 NC='\033[0m'        # No color
 
-# TODO Get a Difference between current and old one
-
-
-
+#### Version Check
+versionCheck=$(node ./scripts/versions.js)
+echo "$versionCheck";
+if [ ! "$versionCheck" = "DigitalOceanApps up-to-date!" ]; then
+  exit;
+fi
 
 # Get actual App ID
 appId=$(getAppId "$appName")
