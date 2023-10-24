@@ -41,6 +41,9 @@ fi
 #Update the Spec
 #shellcheck disable=SC2086
 
+## Link to App
+echo "DO Link >> https://cloud.digitalocean.com/apps/$appId/overview"
+
 currentSpec=$(doctl apps spec get $appId)
 
 compare_files "$currentSpec" "$specPathName"
