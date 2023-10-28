@@ -4,7 +4,9 @@
   "private": false,
   "description": "",
   "scripts": {
-    "testget": "./scripts/getspec.sh webbar webbar-website-prod"
+    "test-get": "./scripts/getspec.sh webbar webbar-website-prod",
+    "test-watch": "./scripts/watchpipeline webbar webbar-website-prod",
+    "test-update": "./scripts/watchpipeline webbar webbar-website-prod"
   },
   "author": "webbar GmbH, https://webbar.dev",
   "license": "MIT"
