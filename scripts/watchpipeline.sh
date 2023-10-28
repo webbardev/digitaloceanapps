@@ -71,7 +71,7 @@ while : ; do
         echo -ne "${GREEN}✅> Success! Deployment is done.${NC}\r"
     fi
 
-    sleep 5
+    sleep 30
 done
 
 
