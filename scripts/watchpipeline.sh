@@ -53,7 +53,20 @@ while : ; do
 
         if [[ $deployment_output == *"error"* ]]; then
             echo -e "${RED}❌> Deployment encountered an error:${NC} $deployment_output"
+            tput bel
+
+            if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+                # Linux
+                echo "Deployment failed" | espeak
+            elif [[ "$OSTYPE" == "darwin"* ]]; then
+                # macOS
+                say "Deployment failed"
+            elif [[ "$OSTYPE" == "msys" || "$OSTYPE" == "cygwin" || "$OSTYPE" == "win32" ]]; then
+                # Windows
+                powershell -c "Add-Type -AssemblyName System.Speech; (New-Object System.Speech.Synthesis.SpeechSynthesizer).Speak('Deployment failed');"
+            fi
         fi
+
     else
         echo -ne "${GREEN}✅> Success! Deployment is done.${NC}\r"
     fi
