@@ -4,7 +4,7 @@ source ./scripts/functions.sh
 
 # Check if both arguments are provided
 if [ -z "$1" ] || [ -z "$2" ]; then
-    echo "Usage: $0 <authContext> <appName>"
+    echo -e "\033[41;97mUsage: $0 <authContext> <appName>\033[0m"
     exit 1
 fi
 
@@ -16,30 +16,30 @@ specPathName="$specFolder/$appName.$extension"
 
 doctl auth switch --context "$authContext"
 
-RED='\033[0;31m'
-GREEN='\033[0;32m'
-GRAY='\033[0;37m'
+GREEN_BG='\033[42;97m'
+RED_BG='\033[41;97m'
+GRAY_BG='\033[48;5;243;97m'
 NC='\033[0m'
 
 #### Version Check
 versionCheck=$(node ./scripts/versions.js)
-echo "$versionCheck";
+echo -e "$versionCheck"
 if [ ! "$versionCheck" = "DigitalOceanApps up-to-date!" ]; then
   exit;
 fi
 
 # Get actual App ID
 appId=$(getAppId "$appName")
-echo "App ID: $appId"
-echo "Spec: ./$specPathName"
+echo -e "App ID: $appId"
+echo -e "Spec: ./$specPathName"
 
 if [[ ! $appId =~ ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$ ]]; then
-    echo "App ID could not be found!"
+    echo -e "${RED_BG}App ID could not be found!${NC}"
     exit 1
 fi
 
 ## Link to App
-echo "DO Link >> https://cloud.digitalocean.com/apps/$appId/overview"
+echo -e "DO Link >> https://cloud.digitalocean.com/apps/$appId/overview"
 
 # Monitoring active deployment
 while : ; do
@@ -47,12 +47,12 @@ while : ; do
     active_deployment_id=$(echo "$output" | awk 'NR==2 {print $1}')
 
     if [[ -n "$active_deployment_id" ]]; then
-        echo -ne "${GRAY}♻️> Current deployment is running...${NC}\r"
+        echo -ne "${GRAY_BG}♻️  > Current deployment is running...${NC}\r"
 
         deployment_output=$(doctl apps get-deployment $appId $active_deployment_id --no-header --format ID,Cause,Progress,Updated)
 
         if [[ $deployment_output == *"error"* ]]; then
-            echo -e "${RED}❌> Deployment encountered an error:${NC} $deployment_output"
+            echo -e "${RED_BG}❌  > Deployment encountered an error:${NC} $deployment_output"
             tput bel
 
             if [[ "$OSTYPE" == "linux-gnu"* ]]; then
@@ -68,11 +68,8 @@ while : ; do
         fi
 
     else
-        echo -ne "${GREEN}✅> Success! Deployment is done.${NC}\r"
+        echo -ne "${GREEN_BG}✅  > Success! Deployment is done.${NC}\r"
     fi
 
     sleep 30
 done
-
-
-
