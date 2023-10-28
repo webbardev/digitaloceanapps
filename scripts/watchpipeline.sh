@@ -47,12 +47,12 @@ while : ; do
     active_deployment_id=$(echo "$output" | awk 'NR==2 {print $1}')
 
     if [[ -n "$active_deployment_id" ]]; then
-        echo -ne "${GRAY_BG}♻️  > Current deployment is running...${NC}\r"
+        echo -ne "${GRAY_BG}♻️  > Pipeline is RUNNING....${NC}\r"
 
         deployment_output=$(doctl apps get-deployment $appId $active_deployment_id --no-header --format ID,Cause,Progress,Updated)
 
         if [[ $deployment_output == *"error"* ]]; then
-            echo -e "${RED_BG}❌  > Deployment encountered an error:${NC} $deployment_output"
+            echo -e "${RED_BG}❌  > Pipeline is RED:${NC} $deployment_output"
             tput bel
 
             if [[ "$OSTYPE" == "linux-gnu"* ]]; then
@@ -68,8 +68,8 @@ while : ; do
         fi
 
     else
-        echo -ne "${GREEN_BG}✅  > Success! Deployment is done.${NC}\r"
+        echo -ne "${GREEN_BG}✅  > Pipeline is GREEN.${NC}\r"
     fi
 
-    sleep 30
+    sleep 2
 done
