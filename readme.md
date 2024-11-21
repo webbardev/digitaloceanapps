@@ -15,7 +15,7 @@ chmod +x install.sh && ./install.sh
 
 For PowerShell:
 ```
-.\extract.ps1
+.\install.ps1
 ```
 
 3.1: Install doctl
