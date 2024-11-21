@@ -1,28 +1,49 @@
-## Installation
+# Installation
 
-1: Add Package from public github 
+1: Copy install.sh (or install.ps1) to your root directory.
+
+2: The following will install a .do folder with a skeleton structure and demo scripts.
+
+For Shell:
 ````
-"digitaloceanapps":"github:webbardev/digitaloceanapps"
+chmod +x install.sh && ./install.sh
 ````
 
-2: run install
-``npm install``
-Note: If you want to update with ``npm update`` you should run install afterward to trigger postinstall.
+For PowerShell:
+```
+.\extract.ps1
+```
 
-3.1: Create a doctl auth context for the <DO-Team-Name>
+3.1: Install doctl
+https://docs.digitalocean.com/reference/doctl/how-to/install/
+
+3.1: Create an Auth Context
+Create a doctl auth context. Recommend to name it like your current team name in DO.
 Note: The Team name is the name on the top-right corner of the DigitalOcean Cloud UI.
 
-3.2: Add postinstall script and
+3.2: Update the package.json scripts with Auth Context and App Names:
+```
+"test-get": "./scripts/getspec.sh AUTH-CONTEXT-NAME APP-NAME-IN-DO",
+"test-update": "./scripts/updatespec AUTH-CONTEXT-NAME APP-NAME-IN-DO",
+```
+
+4.1: Execute GET
+This will pull the current app spec to /specs folder
 ````
-"stage-get": "./scripts/getspec.sh <AUTH-CONTEXT> staging",
-"stage-update": "./scripts/updatespec.sh <AUTH-CONTEXT> staging",
-"postinstall": "cp -r node_modules/digitaloceanapps/scripts ."
+npm run test-get
 ````
 
-4: Execute
+4.1: Execute GET
+This will compare & update the current app spec and create a backup in /backups folder
 ````
-npm run stage-get
+npm run test-update
 ````
+
+5. Updating the structure
+This will pull the newest scripts
+```
+npm update && npm install
+```
 
 ## Folder Structure
 ````
@@ -31,4 +52,5 @@ npm run stage-get
     /backups    # Read-Only, automated backups
     /specs       # App-Specs defined by each instance. Filenames should be App-Names
 ````
+
 

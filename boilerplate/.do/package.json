@@ -3,6 +3,8 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
+    "test-get": "./scripts/getspec.sh AUTH-CONTEXT-NAME APP-NAME-IN-DO",
+    "test-update": "./scripts/updatespec AUTH-CONTEXT-NAME APP-NAME-IN-DO",
     "postinstall": "node ./node_modules/digitaloceanapps/copyAndMakeExecutable.js"
   },
   "author": "",
