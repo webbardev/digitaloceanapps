@@ -30,5 +30,9 @@ Get-ChildItem -Path "boilerplate\.do" -File -Recurse -Force | ForEach-Object {
 # Remove the temporary files and folders
 Remove-Item -Recurse -Force "boilerplate", ".git"
 
+npm install
+
+git add .
+
 # Confirm completion
 Write-Host "Extraction complete, including hidden files like .gitignore!"
