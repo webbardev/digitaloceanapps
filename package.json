@@ -1,6 +1,6 @@
 {
   "name": "@webbar/digitaloceanapps",
-  "version": "1.0.8,
+  "version": "1.0.9",
   "private": false,
   "description": "Shell scripts to manage, get & update DigitalOcean Apps",
   "scripts": {
