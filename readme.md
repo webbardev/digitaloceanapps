@@ -39,6 +39,7 @@ npm run test-get
 
 4.1: Execute GET
 This will compare & update the current app spec and create a backup in /backups folder
+Note: Comparing might not work in Powershell.
 ````
 npm run test-update
 ````
