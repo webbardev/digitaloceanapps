@@ -1,6 +1,10 @@
 # Installation
 
 1: Copy install.sh (or install.ps1) to your root directory.
+Note: The installation will temporarily create a .git installation and removes it. 
+This is for extracting the files from the repository. 
+It will run "git add ." in the end of the script to add it to your current repository.
+If you don't want this, please remove the last line in the script.
 
 2: The following will install a .do folder with a skeleton structure and demo scripts.
 
